@@ -1,49 +1,24 @@
 RISC-V-Tapeout-Program
 ---
 
-## 🖥️ Tools Installation  
+# Week 0 Tasks – Tools Installation
 
-### **System Requirements**
-- 6 GB RAM  
-- 50 GB HDD  
-- Ubuntu 20.04 or higher  
-- 4 vCPU  
+In this week, the task was to install the following tools.
+
+## 🔧 Installed Tools
+
+1. *Icarus Verilog (iverilog)*  
+   - Open-source Verilog simulation and synthesis tool.
+   - Used for compiling and running Verilog code.
+
+2. *GTKWave*  
+   - Waveform viewer for Verilog simulation results.
+   - Helps in debugging digital designs by visualizing signals.
+
+3. *Yosys*  
+   - Open-source synthesis tool.
+   - Used for RTL synthesis and optimization.
+
+✅ All tools have been successfully installed and verified.
 
 ---
-
-### **Merging with the sudo user group**
-```bash
-$ sudo usermod -aG sudo 
-
-```
-
-### **Yosys Installation**
-```bash
-$ sudo apt-get update
-$ git clone https://github.com/YosysHQ/yosys.git
-$ cd yosys
-$ sudo apt install make
-$ sudo apt-get install build-essential clang bison flex \
-    libreadline-dev gawk tcl-dev libffi-dev git \
-    graphviz xdot pkg-config python3 libboost-system-dev \
-    libboost-python-dev libboost-filesystem-dev zlib1g-dev
-$ make config-gcc
-$ git submodule update --init --recursive
-$ sudo apt install yosys
-```
-![yosys](Images/yosys_installation.png)
-
-
-### **IVerilog Installation**
-```bash
-$ sudo apt-get update
-$ sudo apt install iverilog
-```
-
-
-### **Gtkwave Installation**
-```bash
-$ sudo apt-get update
-$ sudo apt-get install gtkwave
-```
-
