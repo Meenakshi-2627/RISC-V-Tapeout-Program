@@ -51,7 +51,7 @@ The iverilog simulation process transforms Verilog code into visual waveform ana
 2.Create VCD files for signal analysis.
 3.View results using GTKWave waveform viewer(Vim).
 
-![Flow](iverilog_simulation_flow.png)
+![Flow](./Images/iverilog_simulation_flow.png)
 
 ### Key Components
 
