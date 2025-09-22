@@ -39,7 +39,7 @@ Testbench characteristics:
 - Testbenches have no primary inputs or outputs - they generate everything internally.
 - Creates and applies various input combinations to exercise the design.
 
-![Alt Text](./images/testbench.png)
+![testbench](./Images/testbench.png)
 
 ## iverilog-Based Simulation Flow
 
@@ -51,7 +51,7 @@ The iverilog simulation process transforms Verilog code into visual waveform ana
 2.Create VCD files for signal analysis.
 3.View results using GTKWave waveform viewer(Vim).
 
-![Alt Text](iverilog_simulation_flow.png)
+![Flow](iverilog_simulation_flow.png)
 
 ### Key Components
 
