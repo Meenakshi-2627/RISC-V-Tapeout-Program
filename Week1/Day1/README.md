@@ -39,7 +39,7 @@ Testbench characteristics:
 - Testbenches have no primary inputs or outputs - they generate everything internally.
 - Creates and applies various input combinations to exercise the design.
 
-![Alt Text](testbench.png)
+![Alt Text]((./images/testbench.png))
 
 ## iverilog-Based Simulation Flow
 
