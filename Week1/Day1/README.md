@@ -48,7 +48,9 @@ The iverilog simulation process transforms Verilog code into visual waveform ana
 ### Simulation Process
 
 1.Combine design and testbench files using iverilog compiler.
+
 2.Create VCD files for signal analysis.
+
 3.View results using GTKWave waveform viewer(Vim).
 
 ![Flow](./Images/iverilog_simulation_flow.png)
@@ -57,7 +59,7 @@ The iverilog simulation process transforms Verilog code into visual waveform ana
 
 **VCD File (Value Change Dump)**: VCD files are industry-standard simulation dump files that record every signal transition during simulation.
 
-**GTKWave** : GTKWave is a waveform viewer that transforms VCD data into interactive signal plots for design analysis and debugging.\
+**GTKWave** : GTKWave is a waveform viewer that transforms VCD data into interactive signal plots for design analysis and debugging.
 
 ## Latch Execution
 ### Verilog Code
@@ -97,6 +99,25 @@ always #23 d=~d;
 always #15 reset=0;
 endmodule
 ```
+
+## Environmental Setup
+**Create a directory and clone it to sky130RTLDesignAndSynthesisWorkshop.git**
+```bash
+cd VLSI
+git clone https://github.com/kunalg123/sky130RTLDesignAndSynthesisWorkshop.git
+```
+**Get into design folders**
+```bash
+/home/meena/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+```
+**Loading the latch into the simulator and generating vcd file**
+```bash
+iverilog good_latch.v tb_good_latch.v
+./a.out
+```
+
+
+
 
 
 
