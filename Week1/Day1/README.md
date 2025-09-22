@@ -2,10 +2,6 @@
 
 You can learn the fundamentals of digital design verification using open-source tools and simulation methodologies.
 
-## Who can use this guide?
-
-This guide is designed for engineering students and professionals beginning their journey in VLSI design and verification.
-
 ## Prerequisites
 
 Before proceeding with Verilog RTL design and synthesis, ensure the following tools are installed:
@@ -15,13 +11,12 @@ Before proceeding with Verilog RTL design and synthesis, ensure the following to
 - GTKWave waveform viewer is configured.
 - Basic understanding of digital logic concepts.
 
-Note
+>**Note**
+>If you're using Windows, consider setting up a virtual machine with Ubuntu or using WSL (Windows Subsystem for Linux) for better compatibility with open-source EDA tools.
 
-If you're using Windows, consider setting up a virtual machine with Ubuntu or using WSL (Windows Subsystem for Linux) for better compatibility with open-source EDA tools.
+# Introduction to Open-Source Simulator: iverilog
 
-## Introduction to Open-Source Simulator: iverilog
-
-### Understanding Core Concepts
+### <u>Simulator</u>
 
 A **simulator** is a software tool that mimics the behavior of digital circuits by executing Verilog code and tracking signal changes over time.
 
@@ -60,7 +55,7 @@ The iverilog simulation process transforms Verilog code into visual waveform ana
 3. **Waveform Generation**: Create VCD files for signal analysis.
 4. **Visualization**: View results using GTKWave waveform viewer.
 
-*Note: Insert iverilog simulation flow diagram here.*
+>*Note: Insert iverilog simulation flow diagram here.*
 
 ### Key Components
 
