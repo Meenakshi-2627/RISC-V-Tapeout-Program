@@ -17,7 +17,7 @@ This day covers the topic of iverilog simulation and yosys
  - [Tool Setup](#environmental-setup)
  - [Simulation](#simulation)
 
-[2. Introduction to Yosys ](./introduction-to-yosys.md)
+[2. Introduction to Yosys ](./introduction_to_yosys.md)
  
 # Introduction to Open-Source Simulator: iverilog
 
