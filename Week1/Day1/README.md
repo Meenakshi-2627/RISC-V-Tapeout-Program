@@ -10,9 +10,11 @@ This day covers the topic of iverilog simulation and yosys
 >- Basic understanding of digital logic concepts.
 
 ## Table of Contents :
-- [1. What is Simulator, Design, Testbench?](#introduction-to-open-source-simulator-iverilog)
-- [2. Simulation flow of iverilog](#iverilog-based-simulation-flow)
-- [3. Latch execution- .v file](#latch-execution)
+[1. Introduction to iverilog simulator ](#introduction-to-open-source-simulator-iverilog)
+ - [What is Simulator , Design , Testbench?](#simulator)
+ - [Simulation flow of iverilog](#iverilog-based-simulation-flow)
+ - [D Latch execution- .v file](#latch-execution)
+ - [Tool Setup](#environmental-setup)
 
 # Introduction to Open-Source Simulator: iverilog
 
@@ -61,7 +63,7 @@ The iverilog simulation process transforms Verilog code into visual waveform ana
 
 **GTKWave** : GTKWave is a waveform viewer that transforms VCD data into interactive signal plots for design analysis and debugging.
 
-## Latch Execution
+## D Latch Execution
 ### Verilog Code
 ```bash
 module good_latch (input clk, input reset,input d , output reg q);
@@ -101,20 +103,34 @@ endmodule
 ```
 
 ## Environmental Setup
-**Create a directory and clone it to sky130RTLDesignAndSynthesisWorkshop.git**
+**1. Create a directory and clone it to 'sky130RTLDesignAndSynthesisWorkshop.git'**
 ```bash
 cd VLSI
 git clone https://github.com/kunalg123/sky130RTLDesignAndSynthesisWorkshop.git
 ```
-**Get into design folders**
+**2. Get into design folders**
 ```bash
-/home/meena/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+cd /home/meena/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files #
 ```
-**Loading the latch into the simulator and generating vcd file**
+![directory](./Images/directory.png)
+
+**3. Loading the latch into the simulator and generating vcd file**
 ```bash
 iverilog good_latch.v tb_good_latch.v
 ./a.out
 ```
+![vcdoutput](./Images/vcdoutput.png)
+
+**4. Output Waveform command**
+```bash
+gtkwave tb_good_latch.vcd
+```
+>vcd file is dumped to gtkwave for visualising the output.
+>
+>The output of D latch can be through the waveform.
+
+![waveform](./Images/waveform_latch.png)
+
 
 
 
