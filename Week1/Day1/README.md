@@ -13,8 +13,9 @@ This day covers the topic of iverilog simulation and yosys
 [1. Introduction to iverilog simulator ](#introduction-to-open-source-simulator-iverilog)
  - [What is Simulator , Design , Testbench?](#simulator)
  - [Simulation flow of iverilog](#iverilog-based-simulation-flow)
- - [D Latch execution- .v file](#latch-execution)
+ - [D Latch execution- .v file](#d-latch-execution)
  - [Tool Setup](#environmental-setup)
+ - [Simulation](#simulation)
 
 # Introduction to Open-Source Simulator: iverilog
 
@@ -114,14 +115,15 @@ cd /home/meena/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files #
 ```
 ![directory](./Images/directory.png)
 
-**3. Loading the latch into the simulator and generating vcd file**
+## Simulation
+**1. Loading the latch into the simulator and generating vcd file**
 ```bash
 iverilog good_latch.v tb_good_latch.v
 ./a.out
 ```
 ![vcdoutput](./Images/vcdoutput.png)
 
-**4. Output Waveform command**
+**2. Output Waveform command**
 ```bash
 gtkwave tb_good_latch.vcd
 ```
