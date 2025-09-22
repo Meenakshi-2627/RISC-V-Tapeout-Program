@@ -16,8 +16,9 @@ This day covers the topic of iverilog simulation and yosys
  - [D Latch execution- .v file](#d-latch-execution)
  - [Tool Setup](#environmental-setup)
  - [Simulation](#simulation)
+
 [2. Introduction to Yosys ](#introduction-to-yosys)
- -
+ 
 # Introduction to Open-Source Simulator: iverilog
 
 ### Simulator
