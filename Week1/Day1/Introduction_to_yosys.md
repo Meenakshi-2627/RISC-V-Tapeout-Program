@@ -1,12 +1,15 @@
 # Introduction to yosys
 
 ## Table of Contents 
- [1. What is synthesizing ?](#what-is-synthesizing) 
- [2. Constraints](#constraints)
- [3. Verification of Synthesis](#verification-of-synthesis)
- [4. Synthesizing](#synthesizing)
- 
 
+  [1. What is synthesizing ?](#what-is-synthesizing-?) 
+  
+  [2. Constraints](#constraints)
+  
+  [3. Verification of Synthesis](#verification-of-synthesis)
+  
+  [4. Synthesizing](#synthesizing)
+ 
 ---
 ## What is Synthesizing ? 
 
