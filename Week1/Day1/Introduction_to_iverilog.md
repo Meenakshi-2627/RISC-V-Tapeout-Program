@@ -18,6 +18,11 @@ This day covers the topic of iverilog simulation and yosys
  - [Simulation](#simulation)
 
 [2. Introduction to Yosys](Introduction_to_yosys.md)
+ -[1. What is Synthesizing?](#1-what-is-synthesizing)  
+ -[2. Fast and slow cells of Liberty file](#2-liberty-lib-file-different-cells)  
+ -[3. Verification of Synthesis](#3-verification-of-synthesis)  
+ -[4. Synthesizing with Yosys](#4-synthesizing-with-yosys)  
+ -[5. Netlisting with Yosys](#netlisting-the-files)
  
 # Introduction to Open-Source Simulator: iverilog
 
