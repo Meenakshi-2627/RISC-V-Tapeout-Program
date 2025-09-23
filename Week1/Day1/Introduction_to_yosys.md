@@ -55,26 +55,26 @@ read_verilog good_mux.v
 ```bash
 synth -top good_latch
 ```
-![yosys_synthesis](yosys_synthesis.png)
+![yosys_synthesis](./Images/yosys_synthesis.png)
 
 **5. Netlisting it**
 ```bash
 abc -liberty ../ib/sky130_fd_sc_hd__tt_025C_1v80.lib
 ```
-![netlist_cmd](netlist_cmd.png)
+![netlist_cmd](./Images/netlist_cmd.png)
 
 >**Netlisted code**
 >
->![netlist_code](netlist_code.png)
+>![netlist_code](./Images/netlist_code.png)
 >
 >**Netlist Output**
->![netlist](netlist.png)
+>![netlist](./Images/netlist.png)
 
 **6. Viewing the Graphical Version**
 ```bash
 show
 ```
-![netlist_output](netlist_output.png)
+![netlist_output](./Images/netlist_output.png)
 
 
 
