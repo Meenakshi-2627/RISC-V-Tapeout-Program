@@ -62,15 +62,59 @@ Liberty files contain different cell flavors optimized for various design requir
 | `read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib` | Start Yosys and Read Library | Provides cell information for mapping |
 | `read_verilog good_mux.v` | Read RTL design | Loads Verilog code into synthesizer |
 | `synth -top good_latch` | Synthesize design | Converts RTL to generic gates |
-| `abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib` | Generate Netlist | Maps generic gates to library cells |
+| `abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib` | Library cells mapping | Maps generic gates to library cells |
 | `show` | Display schematic | Generates graphical netlist view |
+| `write_verilog good_latch_netlist.v` | 
+| `!gvim good_latch_netlist.v` |
+| `write_verilog -noattr good_latch_netlist.v` |
+| `!gvim good_latch_netlist.v` |
 
 **Synthesizing the commands**
 ![yosys_syn](./Images/yosys_syn.png)
 ![abc_cmd](./Images/abc_cmd.png)
 
-**Netlisted Code**
+**Mapping library cells**
 ![netlist_code](./Images/netlist_code.png)
 
 **Display Schematic**
 ![netlist_output](./Images/netlist_output.png)
+
+**Netlisting the files**
+
+
+**After adding a switch as instantiator**
+```bash
+module good_latch(clk, reset, d, q);
+  wire _0_;
+  wire _1_;
+  wire _2_;
+  wire _3_;
+  wire _4_;
+  wire _5_;
+  wire _6_;
+  input clk;
+  input d;
+  output q;
+  input reset;
+  sky130_fd_sc_hd__nor2b_1 _7_ (
+    .A(_6_),
+    .B_N(_5_),
+    .Y(_2_)
+  );
+  sky130_fd_sc_hd__or2_0 _8_ (
+    .A(_6_),
+    .B(_4_),
+    .X(_3_)
+  );
+  `\$_DLATCH_P`_  _9_ (
+    .D(_0_),
+    .E(_1_),
+    .Q(q)
+  );
+  assign _5_ = d;
+  assign _6_ = reset;
+  assign _0_ = _2_;
+  assign _4_ = clk;
+  assign _1_ = _3_;
+endmodule
+```
