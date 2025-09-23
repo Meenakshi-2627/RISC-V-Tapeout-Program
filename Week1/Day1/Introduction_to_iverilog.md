@@ -67,6 +67,22 @@ The iverilog simulation process transforms Verilog code into visual waveform ana
 **GTKWave** : GTKWave is a waveform viewer that transforms VCD data into interactive signal plots for design analysis and debugging.
 
 ## D Latch Execution
+### Input , Output
+
+How It Works
+
+**Inputs:**
+
+Clock Input: `clk`
+
+Reset Input: `reset` (active-high)
+
+Data Input: `d`
+
+**Output:**
+
+Registered Output: `q` 
+
 ### Verilog Code
 ```bash
 module good_latch (input clk, input reset,input d , output reg q);
