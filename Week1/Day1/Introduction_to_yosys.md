@@ -1,82 +1,75 @@
-# Introduction to yosys
+# Introduction to Yosys
 
-## Table of Contents 
+## Table of Contents
 
-  [1. What is synthesizing ?](#what-is-synthesizing-?) 
-  
-  [2. Constraints](#constraints)
-  
-  [3. Verification of Synthesis](#verification-of-synthesis)
-  
-  [4. Synthesizing](#synthesizing)
- 
+[1. What is Synthesizing?](#1-what-is-synthesizing)  
+[2. Constraints](#2-constraints)  
+[3. Verification of Synthesis](#3-verification-of-synthesis)  
+[4. Synthesizing with Yosys](#4-synthesizing-with-yosys)
+
 ---
-## What is Synthesizing ? 
 
-**Design** - Behavioural Representation of requireed specifications in verilog code
+## 1. What is Synthesizing?
 
-**.lib** - Collection of logical modules . Eg : and , or , not gate etc.. 
+**Design** - Behavioral representation of required specifications in Verilog code
 
-**Netlist** - Verilog code representing the design in the form of standard cells 
+**.lib** - Collection of logical modules (e.g., AND, OR, NOT gates, etc.)
 
-**ROLE OF SYNTHESIZER** - To convert RTL Design to Netlist (Gate level Transition) 
+**Netlist** - Verilog code representing the design in the form of standard cells
 
-**TOOL FOR SYNTHESIZING** - yosys
+**Role of Synthesizer** - Convert RTL Design to Netlist (Gate level transition)
 
-![synthesizing_flow](./Images/synthesizing_flow.png)
+**Tool for Synthesizing** - Yosys
 
-## Contraints
+![Synthesis Flow](./Images/synthesize_flow.png)
 
-## Verification of Synthesis 
+---
 
->**NOTE**
->Stimulus should be same as output observed at RTL Simulation
->Same testbench should be used for verification
+## 2. Constraints
 
-![verification_of_syn](./Images/verification_of_syn)
+### Liberty (.lib) File Flavors
 
-## Synthesizing
+Liberty files contain different cell flavors optimized for various design requirements:
 
-**1. Get into the design folders and enter into the tool yosys**
-**2. Read the library file .lib**
-```bash
-read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
-```
-**3. Read the RTL design code**
+| Cell Type | Speed | Power Consumption | Area | Use Case |
+|-----------|-------|-------------------|------|----------|
+| **Fast Cells** | High | High | Large | Timing-critical paths |
+| **Slow Cells** | Low | Low | Small | Non-critical paths |
 
->**NOTE**
->We should not get any error.
->It should get a final statement as frontend completed
+**Advantages of Different Cell Flavors:**
+- **Fast Cells**: Better performance, meet tight timing constraints
+- **Slow Cells**: Lower power consumption, smaller area
+- **Mixed Use**: Optimize for power-performance-area tradeoffs
 
-```bash
-read_verilog good_mux.v
-```
-**4. Synthesizing using Yosys**
-```bash
-synth -top good_latch
-```
+---
+
+## 3. Verification of Synthesis
+
+![Verification Flow](./Images/verification_syn.png)
+
+> **NOTE**:  
+> - Stimulus should be same as output observed at RTL Simulation  
+> - Same testbench should be used for verification
+
+---
+
+## 4. Synthesizing with Yosys
+
+### Yosys Command Reference
+
+| Command | Purpose | Role |
+|---------|---------|------|
+| `read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib` | Start Yosys and Read Library | Provides cell information for mapping |
+| `read_verilog good_mux.v` | Read RTL design | Loads Verilog code into synthesizer |
+| `synth -top good_latch` | Synthesize design | Converts RTL to generic gates |
+| `abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib` | Generate Netlist | Maps generic gates to library cells |
+| `show` | Display schematic | Generates graphical netlist view |
+
+**Synthesizing the commands**
 ![yosys_synthesis](./Images/yosys_synthesis.png)
 
-**5. Netlisting it**
-```bash
-abc -liberty ../ib/sky130_fd_sc_hd__tt_025C_1v80.lib
-```
-![netlist_cmd](./Images/netlist_cmd.png)
+**Netlisted Code**
+![netlist_code](./Images/netlist_code.png)
 
->**Netlisted code**
->
->![netlist_code](./Images/netlist_code.png)
->
->**Netlist Output**
->![netlist](./Images/netlist.png)
-
-**6. Viewing the Graphical Version**
-```bash
-show
-```
+**Display Schematic**
 ![netlist_output](./Images/netlist_output.png)
-
-
-
-
-
