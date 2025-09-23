@@ -66,7 +66,7 @@ Liberty files contain different cell flavors optimized for various design requir
 | `show` | Display schematic | Generates graphical netlist view |
 
 **Synthesizing the commands**
-![yosys_synthesis](./Images/yosys_synthesis.png)
+![yosys_syn](./Images/yosys_syn.png)
 ![abc_cmd](./Images/abc_cmd.png)
 
 **Netlisted Code**
