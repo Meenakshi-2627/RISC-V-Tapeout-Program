@@ -3,9 +3,10 @@
 ## Table of Contents
 
 [1. What is Synthesizing?](#1-what-is-synthesizing)  
-[2. Constraints](#2-constraints)  
+[2. Fast and slow cells of Liberty file](#2-liberty-lib-file-different-cells)  
 [3. Verification of Synthesis](#3-verification-of-synthesis)  
-[4. Synthesizing with Yosys](#4-synthesizing-with-yosys)
+[4. Synthesizing with Yosys](#4-synthesizing-with-yosys)  
+[5. Netlisting with Yosys](#netlisting-the-files)
 
 ---
 
@@ -25,9 +26,7 @@
 
 ---
 
-## 2. Constraints
-
-### Liberty (.lib) File Flavors
+## 2. Liberty (.lib) File different cells 
 
 Liberty files contain different cell flavors optimized for various design requirements:
 
@@ -64,10 +63,10 @@ Liberty files contain different cell flavors optimized for various design requir
 | `synth -top good_latch` | Synthesize design | Converts RTL to generic gates |
 | `abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib` | Library cells mapping | Maps generic gates to library cells |
 | `show` | Display schematic | Generates graphical netlist view |
-| `write_verilog good_latch_netlist.v` | 
-| `!gvim good_latch_netlist.v` |
-| `write_verilog -noattr good_latch_netlist.v` |
-| `!gvim good_latch_netlist.v` |
+| `write_verilog good_latch_netlist.v` | Write netlist with attributes | Saves netlist with synthesis attributes |
+| `!gvim good_latch_netlist.v` | Open netlist in GVim	| View and edit the generated netlist |
+| `write_verilog -noattr good_latch_netlist.v` | Write clean netlist | Saves netlist without synthesis attributes |
+| `!gvim good_latch_netlist.v` | View clean netlist | Open the cleaned netlist in GVim |
 
 **Synthesizing the commands**
 ![yosys_syn](./Images/yosys_syn.png)
@@ -79,8 +78,8 @@ Liberty files contain different cell flavors optimized for various design requir
 **Display Schematic**
 ![netlist_output](./Images/netlist_output.png)
 
-**Netlisting the files**
-
+## **Netlisting the files**
+![netlisting](./Images/netlisting.png)
 
 **After adding a switch as instantiator**
 ```bash
