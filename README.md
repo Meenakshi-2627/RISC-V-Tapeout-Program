@@ -1,5 +1,9 @@
 # RISC-V Reference SoC Tapeout Program
 
+## WORKSHEET
+-[WEEK 0](Week-0)  
+-[WEEK 1](Week1)
+
 ## Table of Contents
 - [Introduction](#introduction)
 - [Week 0: Environment Setup](#week-0-environment-setup)
@@ -49,17 +53,6 @@ The virtual environment provides a stable Linux platform essential for running o
 | Yosys | 0.34+43 | RTL Synthesis | 
 | Icarus Verilog | 12.0 | Verilog Simulation | 
 | GTKWave | 3.3.104 | Waveform Visualization |
-
-#### 1. Yosys - RTL Synthesis Framework
-**Yosys** is an open-source RTL synthesis framework that converts Verilog RTL designs into gate-level netlists. It serves as the foundation for digital synthesis workflows and supports various technology libraries, making it essential for transforming high-level hardware descriptions into implementable circuit representations.
-
-
-#### 2. Icarus Verilog - Verilog Simulator
-**Icarus Verilog** is a comprehensive Verilog simulation and synthesis tool that compiles Verilog source code into executable simulations. It provides accurate behavioral simulation of digital circuits, enabling designers to verify functionality before synthesis and is widely used in academic and professional VLSI design workflows.
-
-
-#### 3. GTKWave - Waveform Viewer
-**GTKWave** is a fully-featured waveform visualization tool that reads VCD, LXT, FST, and other standard simulation dump formats. It provides an intuitive graphical interface for analyzing signal timing, debugging digital circuits, and verifying design behavior through comprehensive waveform analysis capabilities.
 
 ---
 
