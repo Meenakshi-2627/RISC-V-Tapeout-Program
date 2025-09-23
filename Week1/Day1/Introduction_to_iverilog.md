@@ -122,29 +122,25 @@ endmodule
 ```
 
 ## Environmental Setup
-**1. Create a directory and clone it to 'sky130RTLDesignAndSynthesisWorkshop.git'**
-```bash
-cd VLSI
-git clone https://github.com/kunalg123/sky130RTLDesignAndSynthesisWorkshop.git
-```
-**2. Get into design folders**
-```bash
-cd /home/meena/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files #
-```
+
+| Command | Role |
+|---------|---------------|
+| cd VLSI | Create a directory |
+| git clone https://github.com/kunalg123/sky130RTLDesignAndSynthesisWorkshop.git | Git Clone it to 'sky130RTLDesignAndSynthesisWorkshop.git'|
+| cd /home/meena/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files # | Get into design folders |
+
 ![directory](./Images/directory.png)
 
 ## Simulation
-**1. Loading the latch into the simulator and generating vcd file**
-```bash
-iverilog good_latch.v tb_good_latch.v
-./a.out
-```
+
+| Command | Role |
+|---------|---------------|
+| iverilog good_latch.v tb_good_latch.v| Loading the latch into the simulator |
+| ./a.out | Generating vcd file|
+| gtkwave tb_good_latch.vcd | Output Waveform |
+
 ![vcdoutput](./Images/vcdoutput.png)
 
-**2. Output Waveform command**
-```bash
-gtkwave tb_good_latch.vcd
-```
 >vcd file is dumped to gtkwave for visualising the output.
 >
 >The output of D latch can be through the waveform.
