@@ -9,21 +9,22 @@ This day covers the topic of iverilog simulation and yosys
 >- GTKWave waveform viewer is configured.
 >- Basic understanding of digital logic concepts.
 
-## Table of Contents :
-[1. Introduction to iverilog simulator ](#introduction-to-open-source-simulator-iverilog)
- - [What is Simulator , Design , Testbench?](#simulator)
+## Table of Contents 
+
+### [1. Introduction to iverilog simulator](#introduction-to-open-source-simulator-iverilog)
+ - [What is Simulator, Design, Testbench?](#simulator)
  - [Simulation flow of iverilog](#iverilog-based-simulation-flow)
- - [D Latch execution- .v file](#d-latch-execution)
+ - [D Latch execution - .v file](#d-latch-execution)
  - [Tool Setup](#environmental-setup)
  - [Simulation](#simulation)
 
-[2. Introduction to Yosys](Introduction_to_yosys.md)  
- - [What is Synthesizing?](#1-what-is-synthesizing)  
- - [Fast and slow cells of Liberty file](#2-liberty-lib-file-different-cells)  
- - [Verification of Synthesis](#3-verification-of-synthesis)  
- - [Synthesizing with Yosys](#4-synthesizing-with-yosys)  
- - [Netlisting with Yosys](#netlisting-the-files)
- 
+### [2. Introduction to Yosys](Introduction_to_yosys.md)
+ - [What is Synthesizing?](Introduction_to_yosys.md#1-what-is-synthesizing)
+ - [Fast and slow cells of Liberty file](Introduction_to_yosys.md#2-liberty-lib-file-different-cells)
+ - [Verification of Synthesis](Introduction_to_yosys.md#3-verification-of-synthesis)
+ - [Synthesizing with Yosys](Introduction_to_yosys.md#4-synthesizing-with-yosys)
+ - [Netlisting with Yosys](Introduction_to_yosys.md#netlisting-the-files)
+
 # Introduction to Open-Source Simulator: iverilog
 
 ### Simulator
