@@ -1,7 +1,7 @@
 # RISC-V Reference SoC Tapeout Program
 
 ## WORKSHEET
--[WEEK 0](Week 0)  
+-[WEEK 0](week-0)  
 -[WEEK 1](Week1)
 
 ## Table of Contents
