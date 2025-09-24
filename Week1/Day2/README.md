@@ -1,17 +1,19 @@
 # Digital Synthesis and Timing Libraries Guide
 
-## Table of Contents
-1. [Introduction to Timing Libraries](#introduction-to-timing-libraries)
-2. [Understanding PVT Corners](#understanding-pvt-corners)
-3. [Hierarchical Synthesis](#hierarchical-synthesis)
-4. [Flat Netlist Synthesis](#flat-netlist-synthesis)
-5. [Submodule Level Synthesization](#submodule-level-synthesization)
-
 ## Introduction
 
 This comprehensive guide explores digital synthesis fundamentals, focusing on timing library analysis, Process-Voltage-Temperature (PVT) corners, and various synthesis methodologies for VLSI design optimization.
 
 ---
+
+|## Table of Contents|
+|----------------------------|
+|1. [Introduction to Timing Libraries](#introduction-to-timing-libraries)|
+|2. [Understanding PVT Corners](#understanding-pvt-corners)|
+|3. [Hierarchical Synthesis](#hierarchical-synthesis)|
+|4. [Flat Netlist Synthesis](#flat-netlist-synthesis)|
+|5. [Submodule Level Synthesization](#submodule-level-synthesization)|
+
 
 ## Introduction to Timing Libraries
 
