@@ -59,7 +59,7 @@ Liberty files contain different cell flavors optimized for various design requir
 | Command | Purpose | Role |
 |---------|---------|------|
 | `read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib` | Start Yosys and Read Library | Provides cell information for mapping |
-| `read_verilog good_mux.v` | Read RTL design | Loads Verilog code into synthesizer |
+| `read_verilog good_latch.v` | Read RTL design | Loads Verilog code into synthesizer |
 | `synth -top good_latch` | Synthesize design | Converts RTL to generic gates |
 | `abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib` | Library cells mapping | Maps generic gates to library cells |
 | `show` | Display schematic | Generates graphical netlist view |
