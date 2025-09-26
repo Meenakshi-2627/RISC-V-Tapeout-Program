@@ -1,220 +1,248 @@
-# Digital Synthesis and Timing Libraries Guide
+# RISC-V SoC Day 2: Timing Libraries, Synthesis & Flip-Flop Design
 
-## Introduction
+This guide covers timing libraries, synthesis methodologies, and efficient flip-flop coding for RISC-V SoC design using the SKY130 PDK.
 
-This comprehensive guide explores digital synthesis fundamentals, focusing on timing library analysis, Process-Voltage-Temperature (PVT) corners, and various synthesis methodologies for VLSI design optimization.
+## Table of Contents
 
----
+📍 [Timing Libraries](#timing-libraries)  
+📍 [SKY130 PDK Overview](#sky130-pdk-overview)  
+📍 [Hierarchical vs Flat Synthesis](#hierarchical-vs-flat-synthesis)    
+📍 [Flip-Flop Coding Styles](#flip-flop-coding-styles)  
+📍 [Simulation & Synthesis Workflow](#simulation--synthesis-workflow)  
+📍 [Optimization Techniques](#optimization-techniques)  
+📍 [Summary](#summary)
 
-|## Table of Contents|
-|----------------------------|
-|1. [Introduction to Timing Libraries](#introduction-to-timing-libraries)|
-|2. [Understanding PVT Corners](#understanding-pvt-corners)|
-|3. [Hierarchical Synthesis](#hierarchical-synthesis)|
-|4. [Flat Netlist Synthesis](#flat-netlist-synthesis)|
-|5. [Submodule Level Synthesization](#submodule-level-synthesization)|
+## Timing Libraries
 
+### SKY130 PDK Overview
 
-## Introduction to Timing Libraries
+| Component | Description |
+|-----------|-------------|
+| **PDK** | SkyWater 130nm open-source process |
+| **Library** | `sky130_fd_sc_hd__tt_025C_1v80.lib` |
+| **Process** | tt = Typical-Typical corner |
+| **Temperature** | 025C = 25°C |
+| **Voltage** | 1v80 = 1.8V |
 
-### What is a .lib File in VLSI?
+### Understanding .lib Files
 
-A **.lib file** (Liberty file) serves as a **timing and characterization library** in VLSI design, containing:
-- **Behavior, timing, power, and area information** of standard cells
-- Gate characteristics for **logic synthesis, place-and-route, and static timing analysis (STA)**
-- Essential data for **flip-flops, latches, and combinational logic**
+A `.lib` file contains timing and characterization data for standard cells.
 
-> **Think of .lib as the dictionary of cells** for your design tools
+**Opening the library file:**
+```verilog
+cd ~/Documents/Verilog/sky130RTLDesignAndSynthesisWorkshop/lib
+vim sky130_fd_sc_hd__tt_025C_1v80.lib
+```
 
-### SKY130 PDK Library Breakdown: `sky130_fd_sc_hd__tt_025C_1v80.lib`
+### PVT Corners
 
-The SKY130 PDK is an **open-source Process Design Kit** based on SkyWater Technology's 130nm CMOS technology.
+| Corner | Process | Voltage | Temperature | Use Case |
+|--------|---------|---------|-------------|----------|
+| **SS** | Slow NMOS, Slow PMOS | 1.60V | 125°C | Setup timing check |
+| **TT** | Typical NMOS, Typical PMOS | 1.80V | 25°C | Nominal condition |
+| **FF** | Fast NMOS, Fast PMOS | 1.95V | -40°C | Hold timing check |
+| **SF** | Slow NMOS, Fast PMOS | 1.80V | 25°C | Stress testing |
+| **FS** | Fast NMOS, Slow PMOS | 1.80V | 25°C | Stress testing |
 
-**Library naming convention:** `sky130_fd_sc_hd__<corner>_<temp>C_<vdd>.lib`
+## Hierarchical vs Flat Synthesis
 
-- **tt**: Typical process corner
-- **025C**: Operating temperature of 25°C
-- **1v80**: Supply voltage of 1.8V
-
-### Opening and Exploring the Library File
-
-
-> **Note**: To remove syntax highlighting in gvim, use the command `:syn off`
-
-The library file contains crucial parameters:
-- **Delay** characteristics and timing arcs
-- **Pin power** specifications and leakage
-- **Cell power** consumption models
-- **Technology** node parameters
-- **Area** calculations for placement
-
----
-
-## Understanding PVT Corners
-
-**PVT = Process, Voltage, Temperature** - Critical variations that determine whether silicon will work across all operating conditions.
-
-### Extended PVT Corner Analysis
-
-| Corner | Process | Voltage | Temperature | Primary Use Case |
-|--------|---------|---------|-------------|------------------|
-| **SS** | Slow NMOS, Slow PMOS | 1.60V | 125°C | **Worst-case delay** (Setup timing check) |
-| **TT** | Typical NMOS, Typical PMOS | 1.80V | 25°C | **Nominal condition** (Standard operation) |
-| **FF** | Fast NMOS, Fast PMOS | 1.95V | -40°C | **Best-case delay** (Hold timing check) |
-| **SF** | Slow NMOS, Fast PMOS | 1.80V | 25°C | **Stress-test** (Imbalanced devices) |
-| **FS** | Fast NMOS, Slow PMOS | 1.80V | 25°C | **Stress-test** (Imbalanced devices) |
-
-### Why PVT Corners Matter
-
-- **Setup timing verification** → Worst-case corner (SS, 1.6V, 125°C)
-- **Hold timing verification** → Best-case corner (FF, 1.95V, -40°C)
-- **Power analysis** → High voltage + high temperature = worst leakage
-- **Design robustness** → Ensures functionality across all conditions
-
----
-
-## Hierarchical Synthesis
-
-### Design Example: Multiple Modules
+### Example Design: multiple_modules.v
 ```bash
-// Sub_module1: AND gate functionality
 module sub_module1 (input a, input b, output y);
 assign y = a & b;
 endmodule
 
-// Sub_module2: OR gate functionality
 module sub_module2 (input a, input b, output y);
 assign y = a | b;
 endmodule
 
-// Top module: Implements y = (a & b) | c
 module multiple_modules (input a, input b, input c, output y);
 wire net1;
-sub_module1 u1(.a(a), .b(b), .y(net1)); // net1 = a & b
-sub_module2 u2(.a(net1), .b(c), .y(y)); // y = net1 | c
+sub_module1 u1(.a(a), .b(b), .y(net1));
+sub_module2 u2(.a(net1), .b(c), .y(y));
 endmodule
 ```
 
-### Command Overview
-
-| Command | Function |
-|---------|----------|
-| `yosys` | Launches the Yosys synthesis tool |
-| `read_liberty -lib ../lib/sky130_fd_hd_tt_025C_1v80.lib` | Reads the timing library file |
-| `read_verilog multiple_modules.v` | Loads the Verilog design file |
-| `synth -top multiple_modules` | Performs synthesis with specified top module |
-| `hierarchy -check -top multiple_modules` | **Explicit hierarchy verification (recommended)** |
-| `abc -liberty ../lib/sky130_fd_hd_tt_025C_1v80.lib` | Technology mapping using ABC tool |
-| `show multiple_modules` | Displays the synthesized netlist graphically |
-| `write_verilog multiple_modules_hier.v` | Writes hierarchical netlist to file |
-
-### Viewing Design Files
-```bash
-gvim multiple_modules.v
-```
-
-
-### Why Hierarchical Synthesis?
-
-**Hierarchical synthesis** follows a **divide and conquer approach**, preserving module instances (u1, u2) and maintaining design structure.
+### Hierarchical Synthesis
 
 **Advantages:**
-- **Faster synthesis** for large designs (incremental compilation)
-- **Easier debugging** and readability (submodules preserved)
-- **Better reusability** across different designs
-- **Modular optimization** with clear boundaries
+- Preserves module structure
+- Easier debugging
+- Better for large designs
+- Module reusability
 
-**Why NAND Implementation is Preferred:**
+**Yosys Commands:**
+```verilog
+yosys
+read_liberty -lib ~/sky130RTLDesignAndSynthesisWorkshop/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog ~/sky130RTLDesignAndSynthesisWorkshop/verilog_files/multiple_modules.v
+synth -top multiple_modules
+abc -liberty ~/sky130RTLDesignAndSynthesisWorkshop/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show multiple_modules
+write_verilog multiple_modules_hier.v
+```
 
-For basic gates like OR, hierarchical synthesis implements using **NAND and NOT gates** because:
-- **NAND implementation** uses stacked NMOS transistors
-- **Stacked NMOS** provides better performance than stacked PMOS
-- **PMOS devices** are ~2-3× weaker than NMOS (lower mobility)
-- **NOR implementation** requires stacked PMOS → higher resistance and slower operation
-- **NAND gates scale better** with increasing inputs
+### Flat Synthesis
 
----
+**Advantages:**
+- Cross-module optimization
+- Better area/timing optimization
+- Single unified netlist
 
-## Flat Netlist Synthesis
+**Yosys Commands:**
+```bash
+yosys
+read_liberty -lib ~/sky130RTLDesignAndSynthesisWorkshop/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog ~/sky130RTLDesignAndSynthesisWorkshop/verilog_files/multiple_modules.v
+synth -top multiple_modules
+abc -liberty ~/sky130RTLDesignAndSynthesisWorkshop/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+flatten
+show multiple_modules
+write_verilog multiple_modules_flat.v
+```
 
-### Command Overview
-
-| Command | Function |
-|---------|----------|
-| `yosys` | Launches the Yosys synthesis tool |
-| `flatten` | **Flattens the hierarchical design structure** |
-| `write_verilog multiple_modules_flat.v` | Writes flattened netlist to file |
-| `write_verilog -noattr multiple_modules_flat.v` | Writes netlist without attributes |
-| `!gvim multiple_modules_flat.v` | Opens flattened netlist for viewing |
-
-> **Note**: In gvim, use `:vsp multiple_modules_hier.v` to view split screen comparison
-
-### Hierarchical vs Flat Synthesis Comparison
+### Comparison Table
 
 | Aspect | Hierarchical | Flat |
 |--------|-------------|------|
-| **Module Structure** | Preserves submodules | **Single-level design** |
-| **Gate Visibility** | Shows as submodule instances | **Clear gate-level structure** |
-| **Optimization Scope** | Module-level constraints | **Global cross-module optimization** |
-| **Debug Capability** | Module-based analysis | **Direct gate inspection** |
-| **Runtime** | Faster for large designs | Slower for complex designs |
-| **Memory Usage** | Lower | Higher for large designs |
-| **Use Case** | Modular design, reusability | **Maximum optimization** |
+| **Structure** | Preserves modules | Single flat netlist |
+| **Optimization** | Local per module | Global across design |
+| **Debugging** | Easier | Harder |
+| **Runtime** | Faster for large designs | Slower for large designs |
+| **Use Case** | Modular design | Maximum optimization |
 
-### Key Benefits of Flat Synthesis
+## Flip-Flop Coding Styles
 
-**Flat synthesis** removes all hierarchy, making the **gate structure clearly visible** and enabling:
-- **Aggressive optimization** across module boundaries
-- **Comprehensive analysis** of gate-level implementation
-- **Simplified downstream processing** for some tools
-- **Better area optimization** through logic merging
+### Asynchronous Reset D Flip-Flop
+```bash
+module dff_asyncres (
+input clk,
+input async_reset,
+input d,
+output reg q
+);
+always @(posedge clk, posedge async_reset)
+if (async_reset)
+q <= 1'b0;
+else
+q <= d;
+endmodule
+```
+### Synchronous Reset D Flip-Flop
+```bash
+module dff_syncres (
+input clk,
+input sync_reset,
+input d,
+output reg q
+);
+always @(posedge clk)
+begin
+if (sync_reset)
+q <= 1'b0;
+else
+q <= d;
+end
+endmodule
+```
 
----
+### Asynchronous & Synchronous Reset D Flip-Flop
+```bash
+module dff_asyncres_syncres (
+input clk,
+input async_reset,
+input sync_reset,
+input d,
+output reg q
+);
+always @(posedge clk, posedge async_reset)
+begin
+if (async_reset)
+q <= 1'b0;
+else if (sync_reset)
+q <= 1'b0;
+else
+q <= d;
+end
+endmodule
+```
+## Simulation & Synthesis Workflow
 
-## Submodule Level Synthesization
+### Simulation with Icarus Verilog
+```
 
-### Command Overview
+iverilog dff_asyncres.v tb_dff_asyncres.v #Compile
+./a.out #Run simulation
+gtkwave tb_dff_asyncres.vcd  #View waveform
+```
 
-| Command | Function |
-|---------|----------|
-| `yosys` | Launches the Yosys synthesis tool |
-| `read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib` | Reads the standard cell library |
-| `read_verilog multiple_modules.v` | Loads the Verilog design file |
-| `synth -top submodule1` | **Synthesizes only the specified submodule** |
-| `abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib` | Technology mapping for the submodule |
-| `show` | Displays the synthesized submodule |
+### Synthesis with Yosys
+```
+yosys
+read_liberty -lib ~/sky130/file/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog /path/to/dff_asyncres.v
+synth -top dff_asyncres
+dfflibmap -liberty ~/sky130/file/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty ~/sky130/file/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
 
-### Strategic Applications of Submodule Synthesis
+### Why dfflibmap is Important
 
-**Reason 1: Multiple Instance Optimization**
-- **Preferred approach** when design contains multiple instances of the same module
-- Enables **optimized reuse** of synthesized blocks
-- **Reduces synthesis time** through module replication
-- **Consistent performance** across identical instances
+| Without dfflibmap | With dfflibmap |
+|------------------|----------------|
+| Generic flip-flops ($dff, $adff) | Standard cell flip-flops |
+| Cannot be mapped by abc | Properly mapped to library |
+| Incomplete netlist | Complete synthesized netlist |
 
-**Reason 2: Large Design Management**  
-- For **massive designs**, submodule synthesis enables **divide and conquer strategy**
-- **Improves synthesis runtime** and reduces memory requirements
-- **Facilitates parallel synthesis** workflows across design teams
-- **Enhanced debug capability** through modular isolation
+## Optimization Techniques
 
-### Benefits for Complex Digital Systems
+### Special Case 1: Multiplication by Powers of 2
+```
+// A * 2^n = A << n (left shift)
+// No hardware multipliers needed
+assign result = a << 3; // Multiply by 8
+```
 
-This approach significantly enhances:
-- **Design scalability** for enterprise-level projects
-- **Synthesis performance** through parallel processing
-- **Memory efficiency** during compilation
-- **Team collaboration** through modular development
+### Special Case 2: Multiplication by 9
+```
+// A * 9 = A * (8 + 1) = (A << 3) + A
+assign result = (a << 3) + a;
+```
 
----
+### Boolean Logic Optimization
+
+| Input Logic | Optimized Form |
+|-------------|----------------|
+| `a ? (b ? c : (c ? a : 0)) : (!c)` | `a XNOR c` |
+| `(A & B) NOR C` when A=0 | `!C` |
+
+### Sequential Constant Propagation
+
+- Flip-flops with constant inputs can be optimized away
+- Only applies when output is truly constant
+- Clock and reset variations don't affect optimization
+
+### NAND vs NOR Gate Preference
+
+| Gate Type | PMOS Configuration | Performance |
+|-----------|-------------------|-------------|
+| **NAND** | Parallel PMOS | Fast pull-up |
+| **NOR** | Series PMOS | Slow pull-up |
+
+**Why NAND is preferred:**
+- PMOS devices have lower mobility than NMOS
+- Series PMOS in NOR gates create resistance stacking
+- NAND gates scale better with multiple inputs
 
 ## Summary
 
-This guide covered essential concepts for digital synthesis:
+### Key Learning Points
 
-- **Timing libraries** provide the foundation for synthesis with PVT corner analysis
-- **Hierarchical synthesis** offers modularity and faster compilation
-- **Flat synthesis** enables maximum optimization at the cost of complexity
-- **Submodule synthesis** provides strategic advantages for large-scale designs
+1. **Timing Library Analysis**: Successfully explored SKY130 PDK `.lib` files to understand PVT corners (Process, Voltage, Temperature) and their impact on design characterization across different operating conditions.
 
-Choose the appropriate synthesis approach based on your design requirements, team structure, and optimization goals.
+2. **Synthesis Methodology Comparison**: Implemented and compared hierarchical vs flat synthesis approaches, demonstrating how hierarchical synthesis preserves module boundaries for easier debugging while flat synthesis enables global optimization.
+
+3. **Flip-Flop Design Implementation**: Developed and synthesized multiple flip-flop coding styles including asynchronous reset, synchronous reset, and combined reset configurations with proper Yosys synthesis workflows.
+
+4. **Optimization Techniques Mastery**: Applied various optimization strategies including multiplication by powers of 2 using bit shifting, Boolean logic simplification, and sequential constant propagation for efficient hardware implementation.
