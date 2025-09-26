@@ -1,12 +1,11 @@
-# RISC-V Reference SoC Tapeout Program
+# 📘 RISC-V Reference SoC Tapeout Program Progress
 
-## WORKSHEET
--[WEEK 0](./Week%200)  
--[WEEK 1](Week1)
+## Weekly Summary Table
 
-## Table of Contents
-- [Introduction](#introduction)
-- [Week 0: Environment Setup](#week-0-environment-setup)
+| Week   | Contents | Duration | Notes |
+|--------|----------|----------|-------|
+| **Week 0** | Task 1: Ubuntu Installation with Oracle VirtualBox <br>  Task 2: Essential EDA Tools Installation <br> | 18/09/2025 - 20/09/2025 | [Week0](./Week%200) |
+| **Week 1** | Day 1 – Introduction to Verilog RTL design and Synthesis <br> Day 2 – Timing libs, hierarchical vs flat synthesis and efficient flop coding styles <br> Day 3 – Combinational and sequential optimizations <br> Day 4 – GLS, blocking vs non-blocking and Synthesis-Simulation mismatch <br> Day 5 – Optimization in synthesis <br><br> | 21/09/2025 - 27/09/2025 | [Week1](Week1) |
 
 ## Introduction
 
