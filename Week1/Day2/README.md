@@ -56,7 +56,7 @@ A `.lib` file contains timing and characterization data for standard cells.
 cd ~/VLSI/sky130RTLDesignAndSynthesisWorkshop/lib
 gvim sky130_fd_sc_hd__tt_025C_1v80.lib
 ```
-![library_file](library_file.png)
+![library_file](./Images/library_file.png)
 
 ### PVT Corners
 
@@ -88,6 +88,7 @@ endmodule
 ```
 
 ### Hierarchical Synthesis
+---
 
 **Advantages:**
 - Preserves module structure
@@ -98,13 +99,14 @@ endmodule
 **Yosys Commands:**
 ```verilog
 yosys
-read_liberty -lib ~/sky130RTLDesignAndSynthesisWorkshop/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
-read_verilog ~/sky130RTLDesignAndSynthesisWorkshop/verilog_files/multiple_modules.v
+read_liberty -lib ~/VLSI/sky130RTLDesignAndSynthesisWorkshop/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog ~/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files/multiple_modules.v
 synth -top multiple_modules
-abc -liberty ~/sky130RTLDesignAndSynthesisWorkshop/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty ~/VLSI/sky130RTLDesignAndSynthesisWorkshop/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 show multiple_modules
 write_verilog multiple_modules_hier.v
 ```
+![hier_syn](./Images/hier_syn.png)
 
 ### Flat Synthesis
 
@@ -116,14 +118,39 @@ write_verilog multiple_modules_hier.v
 **Yosys Commands:**
 ```bash
 yosys
-read_liberty -lib ~/sky130RTLDesignAndSynthesisWorkshop/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
-read_verilog ~/sky130RTLDesignAndSynthesisWorkshop/verilog_files/multiple_modules.v
+read_liberty -lib ~/VLSI/sky130RTLDesignAndSynthesisWorkshop/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog ~/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files/multiple_modules.v
 synth -top multiple_modules
-abc -liberty ~/sky130RTLDesignAndSynthesisWorkshop/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty ~/VLSI/sky130RTLDesignAndSynthesisWorkshop/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 flatten
 show multiple_modules
 write_verilog multiple_modules_flat.v
 ```
+![flat_syn](./Images/flat_syn.png)
+
+### Submodule Level Synthesis 
+**Command Overview**
+
+| Command | Function |
+|---------|----------|
+| `yosys` | Launches the Yosys synthesis tool |
+| `read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib` | Reads the standard cell library |
+| `read_verilog multiple_modules.v` | Loads the Verilog design file |
+| `synth -top submodule1` | Synthesizes only the specified submodule |
+| `abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib` | Technology mapping for the submodule |
+| `show` | Displays the synthesized submodule |
+
+### Why Submodule Level Synthesis?
+
+**Reason 1: Multiple Instances**
+- Preferred when design contains **multiple instances** of the same module
+- Enables **optimized reuse** of synthesized blocks
+
+**Reason 2: Massive Designs**
+- For **large-scale designs**, submodule synthesis enables **divide and conquer** strategy
+- Improves **synthesis runtime** and **memory efficiency**
+- Facilitates **parallel synthesis** workflows
+- ![sub_module_syn](./Images/sub_module_syn)
 
 ### Comparison Table
 
@@ -199,17 +226,20 @@ iverilog dff_asyncres.v tb_dff_asyncres.v #Compile
 ./a.out #Run simulation
 gtkwave tb_dff_asyncres.vcd  #View waveform
 ```
+![flip_flop_wave](./Images/flip_flop_wave.png)
 
 ### Synthesis with Yosys
 ```
 yosys
-read_liberty -lib ~/sky130/file/sky130_fd_sc_hd__tt_025C_1v80.lib
-read_verilog /path/to/dff_asyncres.v
+read_liberty -lib ~/VLSI/sky130/file/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog dff_asyncres.v
 synth -top dff_asyncres
-dfflibmap -liberty ~/sky130/file/sky130_fd_sc_hd__tt_025C_1v80.lib
-abc -liberty ~/sky130/file/sky130_fd_sc_hd__tt_025C_1v80.lib
+dfflibmap -liberty ~/VLSI/sky130/file/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty ~/VLSI/sky130/file/sky130_fd_sc_hd__tt_025C_1v80.lib
 show
 ```
+
+
 
 ### Why dfflibmap is Important
 
