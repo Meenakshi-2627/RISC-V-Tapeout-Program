@@ -8,7 +8,7 @@ This guide covers timing libraries, synthesis methodologies, and efficient flip-
 📍 [SKY130 PDK Overview](#sky130-pdk-overview)  
 📍 [Hierarchical vs Flat Synthesis](#hierarchical-vs-flat-synthesis)    
 📍 [Flip-Flop Coding Styles](#flip-flop-coding-styles)  
-📍 [Simulation & Synthesis Workflow](#simulation--synthesis-workflow)  
+📍 [Simulation & Synthesis of Flip flop ](#simulation--synthesis-workflow)  
 📍 [Optimization Techniques](#optimization-techniques)  
 📍 [Summary](#summary)
 
