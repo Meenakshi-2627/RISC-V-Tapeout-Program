@@ -2,15 +2,38 @@
 
 This guide covers timing libraries, synthesis methodologies, and efficient flip-flop coding for RISC-V SoC design using the SKY130 PDK.
 
-## Table of Contents
+## 📑 Table of Contents
 
-📍 [Timing Libraries](#timing-libraries)  
-📍 [SKY130 PDK Overview](#sky130-pdk-overview)  
-📍 [Hierarchical vs Flat Synthesis](#hierarchical-vs-flat-synthesis)    
-📍 [Flip-Flop Coding Styles](#flip-flop-coding-styles)  
-📍 [Simulation & Synthesis of Flip flop ](#simulation--synthesis-workflow)  
-📍 [Optimization Techniques](#optimization-techniques)  
-📍 [Summary](#summary)
+- 📌 [Timing Libraries](#timing-libraries)  
+  - [SKY130 PDK Overview](#sky130-pdk-overview)  
+  - [Understanding lib Files](#understanding-lib-files)  
+  - [PVT Corners](#pvt-corners)  
+
+- 📌 [Hierarchical vs Flat Synthesis](#hierarchical-vs-flat-synthesis)  
+  - [Example Design: multiple_modules.v](#example-design-multiple_modulesv)  
+  - [Hierarchical Synthesis](#hierarchical-synthesis)  
+  - [Flat Synthesis](#flat-synthesis)  
+  - [Comparison Table](#comparison-table)  
+
+- 📌 [Flip-Flop Coding Styles](#flip-flop-coding-styles)  
+  - [Asynchronous Reset D Flip-Flop](#asynchronous-reset-d-flip-flop)  
+  - [Synchronous Reset D Flip-Flop](#synchronous-reset-d-flip-flop)  
+  - [Asynchronous and Synchronous Reset D Flip-Flop](#asynchronous-and-synchronous-reset-d-flip-flop)  
+
+- 📌 [Simulation & Synthesis Workflow](#simulation--synthesis-workflow)  
+  - [Simulation with Icarus Verilog](#simulation-with-icarus-verilog)  
+  - [Synthesis with Yosys](#synthesis-with-yosys)  
+  - [Why dfflibmap is Important](#why-dfflibmap-is-important)  
+
+- 📌 [Optimization Techniques](#optimization-techniques)  
+  - [Special Case 1: Multiplication by Powers of 2](#special-case-1-multiplication-by-powers-of-2)  
+  - [Special Case 2: Multiplication by 9](#special-case-2-multiplication-by-9)  
+  - [Boolean Logic Optimization](#boolean-logic-optimization)  
+  - [Sequential Constant Propagation](#sequential-constant-propagation)  
+  - [NAND vs NOR Gate Preference](#nand-vs-nor-gate-preference)  
+
+- 📌 [Summary](#summary)  
+
 
 ## Timing Libraries
 
@@ -30,9 +53,10 @@ A `.lib` file contains timing and characterization data for standard cells.
 
 **Opening the library file:**
 ```verilog
-cd ~/Documents/Verilog/sky130RTLDesignAndSynthesisWorkshop/lib
-vim sky130_fd_sc_hd__tt_025C_1v80.lib
+cd ~/VLSI/sky130RTLDesignAndSynthesisWorkshop/lib
+gvim sky130_fd_sc_hd__tt_025C_1v80.lib
 ```
+![library_file](library_file.png)
 
 ### PVT Corners
 
@@ -146,7 +170,7 @@ end
 endmodule
 ```
 
-### Asynchronous & Synchronous Reset D Flip-Flop
+### Asynchronous and Synchronous Reset D Flip-Flop
 ```bash
 module dff_asyncres_syncres (
 input clk,
