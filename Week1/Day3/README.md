@@ -1,4 +1,4 @@
-# Day 3: Combinational and Sequential Optimization
+<img width="734" height="649" alt="image" src="https://github.com/user-attachments/assets/397bece4-7da9-49f1-9d18-008872f4b352" /># Day 3: Combinational and Sequential Optimization
 
 Welcome to Day 3 of this workshop! Today we discuss optimization of combinational and sequential circuits, introducing techniques to enhance efficiency and performance.
 
@@ -33,8 +33,6 @@ When input signals or internal signals are assigned constant values, the synthes
 Y = ((A·B) + C)'
 If A = 0 → Y = (0 + C)' = C'
 
-text
-
 **Result:** Complex gate logic (6 MOS transistors) simplifies to a single inverter (2 MOS transistors).
 
 **Benefits:**
@@ -58,12 +56,8 @@ text
 **Example:**
 assign y = a ? (b ? c : (c ? a : 0)) : (!c);
 
-text
-    
 **Optimized:**  
 y = a ⊕ c
-
-text
 
 ---
 
@@ -124,7 +118,6 @@ Reposition registers (flip-flops) in a circuit without changing functionality.
 ```
 opt_clean -purge
 ```
-text
 
 **For hierarchical designs:**
 ```
@@ -132,7 +125,6 @@ flatten
 synth -top <module_name>
 opt_clean -purge
 ```
-text
 
 > **Note:**
 > -`opt_clean -purge` performs complete optimization and cleanup:
@@ -150,8 +142,8 @@ cd ~/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
 ```
 **List designs:**
 ```
-ls opt
-ls dff
+ls opt #combinational
+ls dff #sequential
 ```
 
 ## Lab 1: opt_check.v
@@ -160,14 +152,9 @@ ls dff
 ```
 gedit opt_check.v
 ```
-text
 
 **Verilog Code:**
-```
-module opt_check (input a , input b , output y);
-assign y = a?b:0;
-endmodule
-```
+![opt_check](./Images/opt_check.png)
 
 **Functionality:** 
 if `a` is true, `y` is `b`; else `y` is 0. Essentially `y = a & b`.
@@ -187,60 +174,68 @@ exit
 **Statistics:**  
 Number of cells: 1 ($AND)
 
-text
+**Netlist dot file**
+![opt_check_dot](./Images/opt_check_dot.png)
 
 ## Lab 2: opt_check2.v
 
 **Verilog Code:**
-```
-module opt_check2 (input a , input b , output y);
-assign y = a?1:b;
-endmodule
-```
+![opt_check2](./Images/opt_check2.png)
 
 **Functionality:** 
 if `a` is true, output is 1; else output is `b`. Essentially `y = a | b`.
 
 **Statistics:**  
-Number of cells: 1 ($OR)
+```
+=== opt_check2 ===
 
-text
+   Number of wires:                  3
+   Number of wire bits:              3
+   Number of public wires:           3
+   Number of public wire bits:       3
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  1
+     $_OR_                           1
+```
+
+**Netlist dot file**
+![opt_check2_dot](./Images/opt_check2_dot.png)
 
 ## Lab 3: opt_check3.v
 
 **Verilog Code:**
-```
-module opt_check3 (input a , input b, input c , output y);
-assign y = a?(c?b:0):0;
-endmodule
-```
+![opt_check3](./Images/opt_check3.png)
 
 **Functionality:**  
 if `a` and `c` are true, output is `b`; else output is 0. Essentially `y = a & b & c`.
 
 **Statistics:**  
-Number of cells: 2 ($ANDNOT, $NAND)
+```
+=== opt_check3 ===
 
-text
+   Number of wires:                  5
+   Number of wire bits:              5
+   Number of public wires:           4
+   Number of public wire bits:       4
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  2
+     $_ANDNOT_                       1
+     $_NAND_                         1
+```
+**Netlist dot file**
+![opt_check3_dot](./Images/opt_check3_dot.png)
 
 ---
-
 ## LABS ON SEQUENTIAL LOGIC OPTIMIZATION
 
 ## Lab 4: dff_const1.v
 
 **Verilog Code:**
-```
-module dff_const1(input clk, input reset, output reg q);
-always @(posedge clk, posedge reset)
-begin
-if(reset)
-q <= 1'b0;
-else
-q <= 1'b1;
-end
-endmodule
-```
+![dff_const1](./Images/dff_const1.png)
 
 **Functionality:**  
 - D flip-flop with asynchronous reset  
@@ -257,56 +252,77 @@ dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 show
 ```
-text
+**Statistics**
+```
+=== dff_const1 ===
+
+   Number of wires:                  3
+   Number of wire bits:              3
+   Number of public wires:           3
+   Number of public wire bits:       3
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  1
+     $_DFF_PP0_                      1
+```
+**Netlist dot File**
+![dff_const1_dot](./Images/dff_const1_dot.png)
 
 ## Lab 5: dff_const2.v
 
 **Verilog Code:**
-```
-module dff_const2(input clk, input reset, output reg q);
-always @(posedge clk, posedge reset)
-begin
-if(reset)
-q <= 1'b1;
-else
-q <= 1'b1;
-end
-endmodule
-```
-text
+![dff_const2](./Images/dff_const2.png)
 
 **Functionality:**  
 - Output `q` is always 1, regardless of clock or reset  
 - This optimizes to a constant logic 1
 
+**Statistics**
+```
+=== dff_const2 ===
+
+   Number of wires:                  3
+   Number of wire bits:              3
+   Number of public wires:           3
+   Number of public wire bits:       3
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  0
+```
+
+**Netlist dot file**
+![dff_const2_dot](./Images/dff_const2_dot.png)
+
 ## Lab 6: dff_const3.v
 
 **Verilog Code:**
-```
-module dff_const3(input clk, input reset, output reg q);
-reg q1;
-
-always @(posedge clk, posedge reset)
-begin
-if(reset)
-begin
-q <= 1'b1;
-q1 <= 1'b0;
-end
-else
-begin
-q1 <= 1'b1;
-q <= q1;
-end
-end
-endmodule
-```
-text
+![dff_const3](./Images/dff_const3.png)
 
 **Functionality:** 
 - Two flip-flops with different reset values  
 - `q` takes the previous value of `q1`  
 - After reset: `q` outputs 0 on first clock, then 1 on subsequent clocks
+
+**Statistics**
+```
+=== dff_const3 ===
+
+   Number of wires:                  4
+   Number of wire bits:              4
+   Number of public wires:           4
+   Number of public wire bits:       4
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  2
+     $_DFF_PP0_                      1
+     $_DFF_PP1_                      1
+```
+
+**Netlist dot file**
+![dff_const3_dot](./Images/dff_const3_dot.png)
 
 ---
 
