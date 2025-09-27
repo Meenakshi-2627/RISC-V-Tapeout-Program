@@ -1,4 +1,4 @@
-<img width="734" height="649" alt="image" src="https://github.com/user-attachments/assets/397bece4-7da9-49f1-9d18-008872f4b352" /># Day 3: Combinational and Sequential Optimization
+# Day 3: Combinational and Sequential Optimization
 
 Welcome to Day 3 of this workshop! Today we discuss optimization of combinational and sequential circuits, introducing techniques to enhance efficiency and performance.
 
