@@ -232,7 +232,7 @@ iverilog ../my_lib/verilog_model/primitives.v ../my_lib/verilog_model/sky130_fd_
 ./bad_mux_gls.out
 gtkwave tb_bad_mux.vcd
 ```
-![bad_mux_gls](./Images/bad_mux_gls.png)
+![bad_gls](./Images/bad_gls.png)
 
 **Key Observation**: RTL simulation shows output not changing when inputs change (only when sel changes), while GLS shows proper mux behavior.
 
