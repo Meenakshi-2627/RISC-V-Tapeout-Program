@@ -5,22 +5,11 @@ This document covers Gate-Level Simulation (GLS) to verify post-synthesis behavi
 ## Table of Contents
 
 1. [Gate-Level Simulation (GLS)](#gate-level-simulation-gls)
-   - [What is GLS?](#what-is-gls)
-   - [Why Perform GLS?](#why-perform-gls)
-   - [Types of GLS](#types-of-gls)
-   - [GLS Workflow](#gls-workflow)
-   - [Challenges](#challenges)
 
 2. [Synthesis-Simulation Mismatch](#synthesis-simulation-mismatch)
-   - [Missing Sensitivity List](#missing-sensitivity-list)
-   - [Blocking vs Non-blocking Assignments](#blocking-vs-non-blocking-assignments)
-   - [Caveats with Blocking Statements](#caveats-with-blocking-statements)
 
 3. [Labs on Gate-Level Simulation](#labs-on-gate-level-simulation)
-   - [Lab 1: Ternary Operator MUX](#lab-1-ternary-operator-mux)
-   - [Lab 2: Bad MUX Example](#lab-2-bad-mux-example)
-   - [Lab 3: Blocking Caveat](#lab-3-blocking-caveat)
-
+   
 4. [Summary](#summary)
 
 ---
@@ -168,17 +157,17 @@ end
 **Objective**: Demonstrate GLS flow with a simple multiplexer design.
 
 #### Verilog Code
-```
-module ternary_operator_mux (input i0, input i1, input sel, output y);
-assign y = sel ? i1 : i0;
-endmodule
-```
+
+![ternary_operator_mux](./Images/ternary_operator_mux.png)
+
 #### RTL Simulation
 ```
 iverilog -o ternary_mux.out ternary_operator_mux.v tb_ternary_operator_mux.v
 ./ternary_mux.out
 gtkwave tb_ternary_operator_mux.vcd
 ```
+![ternary_gtkwave](./Images/ternary_gtkwave.png)
+
 #### Synthesis
 ```
 yosys
@@ -189,17 +178,16 @@ abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 write_verilog ternary_operator_mux_net.v
 show
 ```
+![ternary_dot](./Images/ternary_dot.png)
+
 
 #### Gate-Level Simulation
 ```
-iverilog -o ternary_mux_gls.out
-../my_lib/verilog_model/primitives.v
-../my_lib/verilog_model/sky130_fd_sc_hd.v
-ternary_operator_mux_net.v
-tb_ternary_operator_mux.v
-./ternary_mux_gls.out
+iverilog ../my_lib/verilog_model/primitives.v ../my_lib/verilog_model/sky130_fd_sc_hd.v ternary_operator_mux_net.v tb_ternary_operator_mux.v
+./ternary_operator_mux_gls.out
 gtkwave tb_ternary_operator_mux.vcd
 ```
+![ternary_gls](./Images/ternary_gls.png)
 
 **Result**: RTL and GLS waveforms should match exactly, confirming no synthesis-simulation mismatch.
 
@@ -210,17 +198,8 @@ gtkwave tb_ternary_operator_mux.vcd
 **Objective**: Demonstrate synthesis-simulation mismatch due to incomplete sensitivity list.
 
 #### Verilog Code
-```
-module bad_mux (input i0, input i1, input sel, output reg y);
-always @(sel) // Missing i0, i1 in sensitivity list
-begin
-if(sel)
-y <= i1;
-else
-y <= i0;
-end
-endmodule
-```
+
+![bad_mux](./Images/bad_mux.png)
 
 #### Analysis
 - **RTL Behavior**: Only responds to `sel` changes, ignoring `i0`/`i1` changes
@@ -233,6 +212,8 @@ iverilog -o bad_mux.out bad_mux.v tb_bad_mux.v
 ./bad_mux.out
 gtkwave tb_bad_mux.vcd
 ```
+![bad_mux_gtkwave](./Images/bad_mux_gtkwave.png)
+
 #### Synthesis
 ```
 yosys
@@ -243,16 +224,15 @@ abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 write_verilog bad_mux_net.v
 show
 ```
+![bad_mux_dot](./Images/bad_mux_dot.png)
+
 #### GLS Simulation
 ```
-iverilog -o bad_mux_gls.out
-../my_lib/verilog_model/primitives.v
-../my_lib/verilog_model/sky130_fd_sc_hd.v
-bad_mux_net.v
-tb_bad_mux.v
+iverilog ../my_lib/verilog_model/primitives.v ../my_lib/verilog_model/sky130_fd_sc_hd.v bad_mux_net.v tb_bad_mux.v
 ./bad_mux_gls.out
 gtkwave tb_bad_mux.vcd
 ```
+![bad_mux_gls](./Images/bad_mux_gls.png)
 
 **Key Observation**: RTL simulation shows output not changing when inputs change (only when sel changes), while GLS shows proper mux behavior.
 
@@ -265,15 +245,8 @@ gtkwave tb_bad_mux.vcd
 **Objective**: Demonstrate issues with blocking statements in combinational logic.
 
 #### Verilog Code
-```
-module blocking_caveat (input a, input b, input c, output reg d);
-reg x;
-always @(*) begin
-d = x & c; // Uses old value of x
-x = a | b; // Updates x after d is calculated
-end
-endmodule
-```
+
+![blocking_caveat](./Images/blocking_caveat.png)
 
 #### Analysis
 - **RTL Behavior**: `d` uses previous value of `x` due to blocking assignment order
@@ -286,6 +259,7 @@ iverilog -o blocking_caveat.out blocking_caveat.v tb_blocking_caveat.v
 ./blocking_caveat.out
 gtkwave tb_blocking_caveat.vcd
 ```
+![blocking_gtkwave](./Images/blocking_gtkwave.png)
 
 #### Synthesis
 ```
@@ -297,16 +271,15 @@ abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 write_verilog blocking_caveat_net.v
 show
 ```
+![blocking_dot](./Images/blocking_dot.png)
+
 #### GLS Simulation
 ```
-iverilog -o blocking_caveat_gls.out
-../my_lib/verilog_model/primitives.v
-../my_lib/verilog_model/sky130_fd_sc_hd.v
-blocking_caveat_net.v
-tb_blocking_caveat.v
+iverilog ../my_lib/verilog_model/primitives.v ../my_lib/verilog_model/sky130_fd_sc_hd.v blocking_caveat_net.v tb_blocking_caveat_mux.v
 ./blocking_caveat_gls.out
 gtkwave tb_blocking_caveat.vcd
 ```
+![blocking_gls](./Images/blocking_gls.png)
 
 #### Solution Options
 ```
