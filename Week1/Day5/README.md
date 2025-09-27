@@ -96,7 +96,7 @@ endgenerate
 
 **Gtkwave**
 
-![incomp_if_gtkwave](./Images/incomp_if_gtkwave.png)
+![incomp_if_vcd](./Images/incomp_if_vcd.png)
 
 **Statistics**
 ```
@@ -124,11 +124,73 @@ endgenerate
 - Demonstrate writing and reading from the register array using indexed signals
 - Verify single-port register file operation with testbench
 
+**Verilog Code**
+
+![incomp_if2](./Images/incomp_if2.png)
+
+**Gtkwave**
+
+![incomp_if2_vcd](./Images/incomp_if2_vcd.png)
+
+**Statistics**
+```
+=== incomp_if2 ===
+
+   Number of wires:                  7
+   Number of wire bits:              7
+   Number of public wires:           5
+   Number of public wire bits:       5
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  3
+     $_DLATCH_P_                     1
+     $_MUX_                          1
+     $_OR_                           1
+```
+
+**Netlist dot file**
+
+![incomp_if2_dot](./Images/incomp_if2_dot.png)
+
 ### 3.3 Lab 3: Generate Block for Parameterized Module
 
 - Create a parameterized adder module
 - Use `generate` block to instantiate multiple adders based on a parameter
 - Simulate the design with different parameter values to verify scalability and correctness
+
+**Verilog Code**
+
+![comp_case](./Images/comp_case.png)
+
+**Gtkwave**
+
+![comp_case_vcd](./Images/comp_case_vcd.png)
+
+**Statistics**
+```
+=== comp_case ===
+
+   Number of wires:                 11
+   Number of wire bits:             12
+   Number of public wires:           5
+   Number of public wire bits:       6
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  7
+     $_AND_                          1
+     $_MUX_                          1
+     $_NOT_                          2
+     $_OAI4_                         1
+     $_ORNOT_                        1
+     $_OR_                           1
+
+```
+
+**Netlist dot file**
+
+![comp_case_dot](./Images/comp_case_dot.png)
 
 ---
 
