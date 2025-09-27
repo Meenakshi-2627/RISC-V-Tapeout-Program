@@ -153,7 +153,8 @@ ls dff #sequential
 gedit opt_check.v
 ```
 
-**Verilog Code:**
+**Verilog Code:**      
+
 ![opt_check](./Images/opt_check.png)
 
 **Functionality:** 
@@ -171,15 +172,29 @@ show
 exit
 ```
 
-**Statistics:**  
-Number of cells: 1 ($AND)
+**Statistics:**    
+```
+=== opt_check ===
 
-**Netlist dot file**
+   Number of wires:                  3
+   Number of wire bits:              3
+   Number of public wires:           3
+   Number of public wire bits:       3
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  1
+     $_AND_                          1
+```
+
+**Netlist dot file**      
+
 ![opt_check_dot](./Images/opt_check_dot.png)
 
 ## Lab 2: opt_check2.v
 
 **Verilog Code:**
+
 ![opt_check2](./Images/opt_check2.png)
 
 **Functionality:** 
@@ -201,11 +216,13 @@ if `a` is true, output is 1; else output is `b`. Essentially `y = a | b`.
 ```
 
 **Netlist dot file**
+
 ![opt_check2_dot](./Images/opt_check2_dot.png)
 
 ## Lab 3: opt_check3.v
 
 **Verilog Code:**
+
 ![opt_check3](./Images/opt_check3.png)
 
 **Functionality:**  
@@ -227,6 +244,7 @@ if `a` and `c` are true, output is `b`; else output is 0. Essentially `y = a & b
      $_NAND_                         1
 ```
 **Netlist dot file**
+
 ![opt_check3_dot](./Images/opt_check3_dot.png)
 
 ---
@@ -235,6 +253,7 @@ if `a` and `c` are true, output is `b`; else output is 0. Essentially `y = a & b
 ## Lab 4: dff_const1.v
 
 **Verilog Code:**
+
 ![dff_const1](./Images/dff_const1.png)
 
 **Functionality:**  
@@ -267,11 +286,13 @@ show
      $_DFF_PP0_                      1
 ```
 **Netlist dot File**
+
 ![dff_const1_dot](./Images/dff_const1_dot.png)
 
 ## Lab 5: dff_const2.v
 
 **Verilog Code:**
+
 ![dff_const2](./Images/dff_const2.png)
 
 **Functionality:**  
@@ -293,11 +314,13 @@ show
 ```
 
 **Netlist dot file**
+
 ![dff_const2_dot](./Images/dff_const2_dot.png)
 
 ## Lab 6: dff_const3.v
 
 **Verilog Code:**
+
 ![dff_const3](./Images/dff_const3.png)
 
 **Functionality:** 
@@ -322,6 +345,7 @@ show
 ```
 
 **Netlist dot file**
+
 ![dff_const3_dot](./Images/dff_const3_dot.png)
 
 ---
